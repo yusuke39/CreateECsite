@@ -28,6 +28,22 @@ public class ShowItemService {
 		return itemList;
 	}
 	
+	/**
+	 * 曖昧検索.
+	 * 
+	 * @param itemName
+	 * @return 検索結果のリストを返す
+	 */
+	public List<List<Item>> serchItem(String itemName){
+		
+		List<List<Item>> serchItemLists = sortItemList(itemRepository.serchItems(itemName));
+		
+		
+		if(serchItemLists.size() == 0) {
+			return null;
+		}
+		return serchItemLists;
+	}
 	
 	/**
 	 * 取得したアイテムリストを横３を繰り返す

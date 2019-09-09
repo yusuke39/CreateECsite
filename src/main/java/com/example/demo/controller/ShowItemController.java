@@ -39,5 +39,18 @@ public class ShowItemController {
 		model.addAttribute("itemList",itemList);
 		return "item_list";
 	}
+	
+	@RequestMapping("/serchItems")
+	public String serchItems(String itemName, Model model) {
+		List<List<Item>> serchItemLists = showItemService.serchItem(itemName);
+		
+		if(serchItemLists == null) {
+			model.addAttribute("nullSerch", "検索結果は０件です");
+			return "item_list";
+		}
+		
+		model.addAttribute("serchItemLists", serchItemLists);
+		return "item_list";
+	}
 
 }

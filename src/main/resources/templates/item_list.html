@@ -36,8 +36,8 @@
 					<p class="navbar-text navbar-right">
 						<a href="cart_list.html" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
 						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a href="login.html" class="navbar-link">ログイン</a>&nbsp;&nbsp;
-						<a href="item_list.html" class="navbar-link">ログアウト</a>
+						<a href="login.html" class="navbar-link">ログイン</a>&nbsp;&nbsp; <a
+							href="item_list.html" class="navbar-link">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -54,11 +54,12 @@
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" action="#" class="form-horizontal">
+						<form method="post" th:action="@{/serchItems}"
+							class="form-horizontal">
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
-									<input type="text" name="code" id="code"
+									<input type="text" name="itemName" id="code"
 										class="form-control input-sm" />
 								</div>
 							</div>
@@ -72,20 +73,38 @@
 			</div>
 		</div>
 
+		<table class="table table-striped">
+			<tbody>
+				<tr th:each="serchItems : ${serchItemLists}">
+					<th th:each="serchItem : ${serchItems}"><a href="item_detail.html">
+							<img th:src="'/img/' + ${serchItem.imagePath}"
+							class="img-responsive img-rounded" width="200" height="600">
+					</a><br> <a href="item_detail.html" th:text="${serchItem.name}">じゃがバターベーコン</a><br>
+						<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span
+						th:text="${#numbers.formatInteger(serchItem.priceM,2,'COMMA') + '円'}">1,380円(税抜)</span><br>
+						<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span
+						th:text="${#numbers.formatInteger(serchItem.priceL,2,'COMMA') + '円'}">1,380円(税抜)</span><br>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+		
+
 		<!-- table -->
 		<div class="row">
-			<div class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+			<div
+				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<table class="table table-striped">
 					<tbody>
 						<tr th:each="items : ${itemList}">
-							<th th:each="item : ${items}">
-								<a href="item_detail.html">
+							<th th:each="item : ${items}"><a href="item_detail.html">
 									<img th:src="'/img/' + ${item.imagePath}"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html" th:text="${item.name}">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM,2,'COMMA') + '円'}">1,380円(税抜)</span><br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceL,2,'COMMA') + '円'}">1,380円(税抜)</span><br>
+									class="img-responsive img-rounded" width="200" height="600">
+							</a><br> <a href="item_detail.html" th:text="${item.name}">じゃがバターベーコン</a><br>
+								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span
+								th:text="${#numbers.formatInteger(item.priceM,2,'COMMA') + '円'}">1,380円(税抜)</span><br>
+								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span
+								th:text="${#numbers.formatInteger(item.priceL,2,'COMMA') + '円'}">1,380円(税抜)</span><br>
 							</th>
 						</tr>
 					</tbody>
