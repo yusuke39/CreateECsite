@@ -24,8 +24,6 @@ public class ShowItemController {
 	@Autowired
 	private ShowItemService showItemService;
 	
-	
-	
 	/**
 	 *商品一覧表示.
 	 * 
@@ -34,21 +32,21 @@ public class ShowItemController {
 	 */
 	@RequestMapping("")
 	public String showItems(Model model) {
-//		List<List<Item>> itemList = new ArrayList<>();
 		List<List<Item>> itemList = showItemService.findAllItems();
 		model.addAttribute("itemList",itemList);
 		return "item_list";
 	}
 	
+	/**
+	 * 曖昧検索の結果をコントロールする.
+	 * 
+	 * @param itemName
+	 * @param model
+	 * @return　商品一覧画面を返す
+	 */
 	@RequestMapping("/serchItems")
 	public String serchItems(String itemName, Model model) {
 		List<List<Item>> serchItemLists = showItemService.serchItem(itemName);
-		
-		if(serchItemLists == null) {
-			model.addAttribute("nullSerch", "検索結果は０件です");
-			return "item_list";
-		}
-		
 		model.addAttribute("serchItemLists", serchItemLists);
 		return "item_list";
 	}

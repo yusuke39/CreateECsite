@@ -38,10 +38,6 @@ public class ShowItemService {
 		
 		List<List<Item>> serchItemLists = sortItemList(itemRepository.serchItems(itemName));
 		
-		
-		if(serchItemLists.size() == 0) {
-			return null;
-		}
 		return serchItemLists;
 	}
 	
@@ -59,11 +55,13 @@ public class ShowItemService {
 		for(int i = 1; i <= item.size(); i++) {
 			sortLists.add(item.get(i -1));
 			
+			//もしiが３で割り切れたら、itemListにsortlistをaddする
 			if(i % 3 == 0) {
 				itemLists.add(sortLists);
 				sortLists = new ArrayList<>();
 			}
 		}
+		
 		itemLists.add(sortLists);
 		return itemLists;
 	}

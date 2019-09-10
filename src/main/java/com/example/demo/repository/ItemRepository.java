@@ -60,7 +60,7 @@ public class ItemRepository {
 	public List<Item> serchItems(String itemName){
 		String sql = "SELECT * FROM items WHERE name LIKE :itemName";
 		
-		SqlParameterSource param = new MapSqlParameterSource().addValue("itemName", "%" + itemName + "%");
+		SqlParameterSource param = new MapSqlParameterSource().addValue("itemName", '%' + itemName + '%');
 		
 		List<Item> itemSerchList = template.query(sql, param,ITEM_ROW_MAPPER);
 		
