@@ -40,23 +40,23 @@ public class UserController {
 	 * @param model
 	 * @return 商品詳細を表示する
 	 */
-	@RequestMapping("/cheeckLogin")
-	public String checkLogin(String email, String password, UserForm form, Model model) {
-		
-		List<User> userList = userService.findUserByMailAddressAndPassword(email, password,form);
-		
-		if(userList == null) {
-			model.addAttribute("loginError", "メールアドレスかパスワードが一致しません");
-			return login(model);
-		}
-		
-		User user = new User();
-		user = userList.get(0);
-		model.addAttribute("user", user);
-		
-		return "forward:/";
-		
-	}
+//	@RequestMapping("/cheeckLogin")
+//	public String checkLogin(String email, String password, UserForm form, Model model) {
+//		
+//		List<User> userList = userService.findUserByMailAddressAndPassword(email, password,form);
+//		
+//		if(userList == null) {
+//			model.addAttribute("loginError", "メールアドレスかパスワードが一致しません");
+//			return login(model);
+//		}
+//		
+//		User user = new User();
+//		user = userList.get(0);
+//		model.addAttribute("user", user);
+//		
+//		return "forward:/";
+//		
+//	}
 	
 	
 	/**

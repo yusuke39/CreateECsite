@@ -46,14 +46,14 @@ public class UserRepository {
 	 * @param password
 	 * @return ユーザーのリスト
 	 */
-	public List<User> findUser(String email, String password){
-		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email = :email AND password = :password";
+	public User findUser(String email){
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email = :email";
 		
-		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
 		
-		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
 		
-		return userList;
+		return user;
 	}
 	
 	/**
