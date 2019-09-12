@@ -34,7 +34,7 @@ $(function(){
 		
 		
 		var allPrice = (sizePrice + toppingPrice) * piza_count;
-		$("#total-price").html('<input type="hidden" name="totalPrice">' + allPrice.toLocaleString());
+		$("#total-price").html('<input type="hidden" name="totalPrice">' + '合計金額: '  + allPrice.toLocaleString() + '円（税抜)');
 		
 	};
 	
