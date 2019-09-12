@@ -45,11 +45,11 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input class="size" type="radio" name="size" checked="checked" value="m">
-										<span>&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span class="priceM" th:text="${#numbers.formatInteger(itemDetail.priceM,2,'COMMA')}">1,380円(税抜)</span>円(税抜)
+										<span>&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span class="priceM" th:text="${#numbers.formatInteger(itemDetail.priceM,2,'COMMA') + '円(税抜)'}">1,380円(税抜)</span>
 									</label>
 									<label class="radio-inline">
 										<input class="size" type="radio" name="size" value="l">
-										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;<span class="priceL" th:text="${#numbers.formatInteger(itemDetail.priceL,2,'COMMA')}">1,380円(税抜)</span>円(税抜)
+										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;<span class="priceL" th:text="${#numbers.formatInteger(itemDetail.priceL,2,'COMMA') + '円(税抜)'}">1,380円(税抜)</span>
 									</label>
 								</div>
 							</div>
