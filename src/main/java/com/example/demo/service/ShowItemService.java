@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.Item;
 import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.ToppingRepository;
 
 @Service
 @Transactional
@@ -16,6 +17,9 @@ public class ShowItemService {
 	
 	@Autowired
 	private ItemRepository itemRepository;
+	
+	@Autowired
+	private ToppingRepository toppingRepository;
 	
 	
 	/**
@@ -41,6 +45,27 @@ public class ShowItemService {
 		return serchItemLists;
 	}
 	
+	
+	/**
+	 * アイテムを１件検索する.
+	 * 
+	 * @param itemId
+	 * @return　アイテム情報が１件詰まったドメイン
+	 */
+	public Item findItemByItemId(Integer itemId) {
+		List<Item> itemList = itemRepository.load(itemId);
+		
+		if(itemList.size() == 0) {
+			return null;
+		}
+		
+		Item item = itemList.get(0);
+		item.setToppingList(toppingRepository.findAll());
+		return item;
+	}
+	
+	
+	
 	/**
 	 * 取得したアイテムリストを横３を繰り返す
 	 * 
@@ -65,4 +90,5 @@ public class ShowItemService {
 		itemLists.add(sortLists);
 		return itemLists;
 	}
+	
 }

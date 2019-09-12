@@ -50,5 +50,19 @@ public class ShowItemController {
 		model.addAttribute("serchItemLists", serchItemLists);
 		return "item_list";
 	}
+	
+	
+	/**
+	 * アイテムを１件検索して表示する.
+	 * 
+	 * @param itemId
+	 * @return　商品詳細画面
+	 */
+	@RequestMapping("/showItemDetail")
+	public String showItemDetail(Integer itemId, Model model) {
+		Item itemDetail = showItemService.findItemByItemId(itemId);
+		model.addAttribute("itemDetail", itemDetail);
+		return "item_detail";
+	}
 
 }

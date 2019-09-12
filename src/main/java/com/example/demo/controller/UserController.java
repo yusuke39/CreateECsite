@@ -1,14 +1,12 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.domain.User;
 import com.example.demo.form.UserForm;
+import com.example.demo.service.UserDetailService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -17,6 +15,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserDetailService UserDetailService;
 	
 	
 	/**
@@ -28,6 +29,13 @@ public class UserController {
 	@RequestMapping("/login")
 	public String login(Model model) {
 		return "login";
+	}
+	
+	
+	@RequestMapping("/checkLogin")
+	public String checkLogin(String email) {
+		UserDetailService.loadUserByUsername(email);
+		return "forward:/";
 	}
 	
 	

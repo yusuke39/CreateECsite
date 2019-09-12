@@ -38,6 +38,8 @@ public class ItemRepository {
 	
 	
 	
+	
+	
 	/**
 	 * 商品を全件取得する.
 	 * 
@@ -58,7 +60,7 @@ public class ItemRepository {
 	 * @return　検索結果をリストで返す
 	 */
 	public List<Item> serchItems(String itemName){
-		String sql = "SELECT * FROM items WHERE name LIKE :itemName";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :itemName";
 		
 		SqlParameterSource param = new MapSqlParameterSource().addValue("itemName", '%' + itemName + '%');
 		
@@ -66,5 +68,24 @@ public class ItemRepository {
 		
 		return itemSerchList;
 	}
+	
+	
+	/**
+	 * アイテムを１件検索する.
+	 * 
+	 * @param itemId
+	 * @return　アイテム情報が１件詰まったドメイン
+	 */
+	public List<Item> load(Integer itemId) {
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted From items WHERE id = :itemId";
+		
+		SqlParameterSource param = new MapSqlParameterSource().addValue("itemId", itemId);
+		
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		
+		return itemList;
+	}
+	
+	
 
 }

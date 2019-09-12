@@ -56,7 +56,7 @@
 										href="item_detail.html"> <img
 											th:src="'/img/' + ${serchItem.imagePath}"
 											class="img-responsive img-rounded" width="200" height="600">
-									</a><br> <a href="item_detail.html" th:text="${serchItem.name}">じゃがバターベーコン</a><br>
+									</a><br> <a th:href="@{'/showItemDetail?id=' + ${serchItem.id}}" th:text="${serchItem.name}">じゃがバターベーコン</a><br>
 										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span
 										th:text="${#numbers.formatInteger(serchItem.priceM,2,'COMMA') + '円'}">1,380円(税抜)</span><br>
 										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span
@@ -80,7 +80,7 @@
 										<a href="item_detail.html">
 												<img th:src="'/img/' + ${item.imagePath}"
 												class="img-responsive img-rounded" width="200" height="600">
-										</a><br> <a href="item_detail.html" th:text="${item.name}">じゃがバターベーコン</a><br>
+										</a><br> <a th:href="@{'/showItemDetail?itemId=' + ${item.id}}" th:text="${item.name}">じゃがバターベーコン</a><br>
 											<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span
 											th:text="${#numbers.formatInteger(item.priceM,2,'COMMA') + '円'}">1,380円(税抜)</span><br>
 											<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span
