@@ -44,14 +44,12 @@
 								</div>
 								<div class="col-sm-12">
 									<label class="radio-inline">
-										<input type="radio"
-											name="responsibleCompany" checked="checked">
-										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(itemDetail.priceM,2,'COMMA') + '円(税抜)'}">1,380円(税抜)</span>
+										<input class="size" type="radio" name="size" checked="checked" value="m">
+										<span>&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span class="priceM" th:text="${#numbers.formatInteger(itemDetail.priceM,2,'COMMA') + '円(税抜)'}">1,380円(税抜)</span>
 									</label>
 									<label class="radio-inline">
-										<input type="radio"
-											name="responsibleCompany">
-										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(itemDetail.priceL,2,'COMMA') + '円(税抜)'}">1,380円(税抜)</span>
+										<input class="size" type="radio" name="size" value="l">
+										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;<span class="priceL" th:text="${#numbers.formatInteger(itemDetail.priceL,2,'COMMA') + '円(税抜)'}">1,380円(税抜)</span>
 									</label>
 								</div>
 							</div>
@@ -69,7 +67,7 @@
 										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;300円(税抜)
 									</label>
 								</div>
-								<div class="col-sm-12" th:each="topping : ${itemDetail.toppingList}">
+								<div class="toppings" th:each="topping : ${itemDetail.toppingList}">
 									<label class="checkbox-inline">
 										<input type="checkbox" th:text="${topping.name}" th:value="${topping.id}">
 									</label>
@@ -86,7 +84,7 @@
 									<label for="">数量:</label>
 									<label class="control-label"
 										style="color: red" for="inputError">数量を選択してください</label> <select
-										name="area" class="form-control">
+										name="area" class="form-control" id="pizaCount">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -109,7 +107,7 @@
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-10">
 						<div class="form-group">
-							<span id="total-price">この商品金額：38,000 円(税抜)</span>
+							<span id="total-price" th:text="'この商品金額：' + ${#numbers.formatInteger(itemDetail.priceM,2,'COMMA') + '円(税抜)'}">この商品金額：<span class="calcPrice">38,000</span>円(税抜)</span>
 						</div>
 					</div>
 				</div>
