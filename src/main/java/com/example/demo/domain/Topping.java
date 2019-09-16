@@ -10,6 +10,7 @@ public class Topping {
 	private Integer priceM;
 	/** Lサイズの値段 */
 	private Integer priceL;
+	
 
 	public Integer getId() {
 		return id;
