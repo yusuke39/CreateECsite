@@ -47,15 +47,6 @@ public class ShoppingCartService {
 		orderItem.setItemId(Integer.parseInt(form.getItemId()));
 		orderItem.setSize(form.getSize());
 		orderItem.setQuantity(Integer.parseInt(form.getQuantity()));
-		//リストの中のInteger型のList内のトッピングIDをOrderTopping型のListに移し替える.
-		List<OrderTopping> orderToppingList =  new ArrayList<>();
-		OrderTopping orderTopping = new OrderTopping();
-		if(form.getOrderToppingList() != null) {
-			for(Integer toppingId : form.getOrderToppingList()) {
-				orderTopping.setToppingId(toppingId);
-				orderToppingList.add(orderTopping);
-			}
-		}
 
 		List<Order> orderList = orderRepository.findOrderByUserIdAndStatus(userId, 0);
 		
@@ -65,9 +56,21 @@ public class ShoppingCartService {
 			orderItem.setOrderId(orderDomain.getId());
 			
 			OrderItem orderItemDomain = orderItemRepository.insert(orderItem);
-			orderTopping.setOrderItemId(orderItemDomain.getId());
 			
-			orderToppingRepository.insert(orderTopping);
+			List<OrderTopping> orderToppingList =  new ArrayList<>();
+			OrderTopping orderTopping = new OrderTopping();
+			if(form.getOrderToppingList() != null) {
+				for(Integer toppingId : form.getOrderToppingList()) {
+					orderTopping.setToppingId(toppingId);
+					orderToppingList.add(orderTopping);
+					orderTopping.setOrderItemId(orderItemDomain.getId());
+					orderToppingRepository.insert(orderTopping);
+				}
+			}
+
+//			orderTopping.setOrderItemId(orderItemDomain.getId());
+//			
+//			orderToppingRepository.insert(orderTopping);
 			
 		} else {
 			
@@ -75,10 +78,17 @@ public class ShoppingCartService {
 			
 			orderItem.setOrderId(orderDomain.getId());
 			OrderItem orderItemDomain = orderItemRepository.insert(orderItem);
-
-			orderTopping.setOrderItemId(orderItemDomain.getId());
 			
-			orderToppingRepository.insert(orderTopping);
+			List<OrderTopping> orderToppingList =  new ArrayList<>();
+			OrderTopping orderTopping = new OrderTopping();
+			if(form.getOrderToppingList() != null) {
+				for(Integer toppingId : form.getOrderToppingList()) {
+					orderTopping.setToppingId(toppingId);
+					orderToppingList.add(orderTopping);
+					orderTopping.setOrderItemId(orderItemDomain.getId());
+					orderToppingRepository.insert(orderTopping);
+				}
+			}
 			
 		}
 		
