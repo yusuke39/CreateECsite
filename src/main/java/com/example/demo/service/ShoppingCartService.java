@@ -87,5 +87,21 @@ public class ShoppingCartService {
 			}
 		}
 	}
+	
+	/**
+	 * 全件検索用のメソッド.
+	 * 
+	 * @param order
+	 * @return 検索した結果を返す
+	 */
+	public Order findAll(Integer userId){
+		
+		List<Order> orderList = orderRepository.findOrderByUserIdAndStatus(userId, 0);
+		Order order = orderList.get(0);
+		Integer orderId = order.getId();
+		Order orderDomain = orderRepository.findAll(orderId);
+		
+		return orderDomain;
+	}
 
 }

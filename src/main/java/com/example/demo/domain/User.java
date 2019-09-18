@@ -22,6 +22,14 @@ public class User {
 	private String address;
 	/** 電話番号 */
 	private String telephone;
+	
+	
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", zipcode="
+				+ zipcode + ", address=" + address + ", telephone=" + telephone + "]";
+	}
 
 	public Integer getId() {
 		return id;

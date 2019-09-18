@@ -31,7 +31,6 @@ public class Order {
 	private Integer paymentMethod;
 	/** オーダーアイテムリスト */
 	private List<OrderItem> orderItemList;
-	
 
 	public List<OrderItem> getOrderItemList() {
 		return orderItemList;
@@ -167,4 +166,28 @@ public class Order {
 	public Order() {
 	}
 
+	/**
+	 * １商品のタックスを計算する.
+	 * 
+	 * @return タックスの金額
+	 */
+	public Integer getTax() {
+		double tax = getCalcTotalPricePrice() * 0.08;
+
+		return (int) tax;
+	}
+
+	/**
+	 * 商品とトッピングの金額を計算する.
+	 * 
+	 * @return 商品とトッピングの合計金額
+	 */
+	public Integer getCalcTotalPricePrice() {
+
+		int allPrice = 0;
+		for (OrderItem orderItem : orderItemList) {
+			allPrice += orderItem.getSubTotal();
+		}
+		return allPrice;
+	}
 }

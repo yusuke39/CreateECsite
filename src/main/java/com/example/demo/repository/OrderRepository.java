@@ -35,7 +35,7 @@ public class OrderRepository {
 	
 	
 	//リザルトセットエクストラクター
-	private ResultSetExtractor<List<Order>> ORDER_RESULT_SET_EXTRACTOR = (rs) ->{
+	private static final ResultSetExtractor<List<Order>> ORDER_RESULT_SET_EXTRACTOR = (rs) ->{
 	
 		List<Order> orderList = new ArrayList<>();
 		List<OrderItem> orderItemList = null;
@@ -91,6 +91,7 @@ public class OrderRepository {
 				item.setPriceL(rs.getInt("i_price_l"));
 				item.setImagePath(rs.getString("i_image_path"));
 				item.setDeleted(rs.getBoolean("i_deleted"));
+				
 				orderItem.setItem(item);
 				
 				orderToppingList = new ArrayList<>();
@@ -112,9 +113,9 @@ public class OrderRepository {
 				
 				Topping topping = new Topping();
 				topping.setId(rs.getInt("t_id"));
-				topping.setName(rs.getString("i_name"));
-				topping.setPriceM(rs.getInt("i_price_m"));
-				topping.setPriceL(rs.getInt("i_price_l"));
+				topping.setName(rs.getString("t_name"));
+				topping.setPriceM(rs.getInt("t_price_m"));
+				topping.setPriceL(rs.getInt("t_price_l"));
 				orderTopping.setTopping(topping);
 				
 				orderToppingList.add(orderTopping);
@@ -145,7 +146,7 @@ public class OrderRepository {
 		sql.append("ot.id ot_id,ot.topping_id ot_topping_id,ot.order_item_id ot_order_item_id,");
 		sql.append("i.id i_id,i.name i_name,i.description i_description,i.price_m i_price_m,i.price_l i_price_l,i.image_path i_image_path,i.deleted i_deleted,");
 		sql.append("t.id t_id,t.name t_name,t.price_m t_price_m,t.price_l t_price_l");
-		sql.append(" FROM " + ORDER + " o LEFT OUTER JOIN " +  ORDER_ITEMS + " oi ON o.id = oi.order_id LEFT OUTER JOIN " + ITEMS + " i ON i.id = oi.item_id");
+		sql.append(" FROM " + ORDER + " o LEFT OUTER JOIN " +  ORDER_ITEMS + " oi ON o.id = oi.order_id LEFT OUTER JOIN " + ITEMS + " i ON oi.item_id = i.id");
 		sql.append(" LEFT OUTER JOIN " + ORDER_TOPPINGS + " ot ON oi.id = ot.order_item_id LEFT OUTER JOIN " + TOPPINGS + " t ON t.id = ot.topping_id");
 		
 		return sql.toString();
@@ -200,6 +201,22 @@ public class OrderRepository {
 		List<Order> orderList = template.query(sql, param,ORDER_RESULT_SET_EXTRACTOR);
 		
 		return orderList;
+	}
+	
+	/**
+	 * 5つテーブルを結合して、ログインしている人のショッピングカートの中身を取得.
+	 * 
+	 * @return 全件検索した結果を返す
+	 */
+	public Order findAll(Integer orderId){
+		StringBuilder sql = new StringBuilder();
+		sql.append(joinFiveTables());
+		sql.append(" WHERE o.id = :orderId");
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
+		
+		List<Order> orderList = template.query(sql.toString(),param,ORDER_RESULT_SET_EXTRACTOR);
+		
+		return orderList.get(0);
 	}
 
 }

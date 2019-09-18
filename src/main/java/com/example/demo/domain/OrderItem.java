@@ -81,4 +81,25 @@ public class OrderItem {
 	public void setSize(String size) {
 		this.size = size;
 	}
+	
+	/**
+	 * 商品とトッピングの合計金額を計算する.
+	 * 
+	 * @return　商品とトッピングの合計金額
+	 */
+	public Integer getSubTotal() {
+		
+		int itemPrice = 0;
+		
+		if(size.equals("m")) {
+			itemPrice = item.getPriceM() + 200 * orderToppingList.size();
+		} else {
+			itemPrice = item.getPriceL() + 300 * orderToppingList.size();
+		}
+		
+		int allPrice = itemPrice * quantity;
+		
+		return allPrice;
+
+	}
 }
