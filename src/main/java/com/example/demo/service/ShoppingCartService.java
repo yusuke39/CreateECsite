@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -41,7 +42,6 @@ public class ShoppingCartService {
 	 * @param userId
 	 */
 	public void addShopingCart(ShoppingCartForm form, Integer userId) {
-		System.out.println(form);
 		// formから受け取った値をドメインに詰める
 		Order order = new Order();
 		order.setUserId(userId);
@@ -54,8 +54,6 @@ public class ShoppingCartService {
 		orderItem.setQuantity(Integer.parseInt(form.getQuantity()));
 
 		List<Order> orderList = orderRepository.findOrderByUserIdAndStatus(userId, 0);
-		
-		System.out.println(orderList.size());
 
 		if (orderList.size() == 0) {
 
@@ -133,20 +131,23 @@ public class ShoppingCartService {
 	 * @throws ParseException 
 	 */
 	public void updateOrderTable(OrderForm form) {
+		System.out.println(form);
 		Order order = new Order();
 		//現在の日付を取得して、Date型に変換する
 		LocalDate localDate = LocalDate.now();
 		Date date = Date.valueOf(localDate);
 
 		//String型からTimestamp型へ変換をする		
-		java.sql.Timestamp timestamp = null;
-		try{
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-		    Date parsedDate = (Date) dateFormat.parse(form.getDeliveryTime());
-		    timestamp = new java.sql.Timestamp(parsedDate.getTime());
-		}catch(Exception e){//this generic but you can control another types of exception
-		 e.printStackTrace();
-		}
+			String delivery = form.getDeliveryDate() + " " + form.getDeliveryTime();
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh");
+		    java.util.Date parsedDate = null;
+			try {
+				parsedDate = dateFormat.parse(delivery);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
 		
 		//statusが0なら２に変更（入金済みの意味)
 		if(Integer.parseInt(form.getStatus()) == 0) {

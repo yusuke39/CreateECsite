@@ -22,6 +22,8 @@ public class OrderForm {
 	private String destinationAddress;
 	/** 宛先電話番号 */
 	private String destinationTel;
+	/** 配達日 */
+	private String deliveryDate;
 	/** 配達時間 */
 	private String deliveryTime;
 	/** 支払方法 */
@@ -107,6 +109,14 @@ public class OrderForm {
 		this.destinationTel = destinationTel;
 	}
 
+	public String getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(String deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
 	public String getDeliveryTime() {
 		return deliveryTime;
 	}
@@ -128,13 +138,13 @@ public class OrderForm {
 		return "OrderForm [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
 				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
 				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
-				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + "]";
+				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryDate=" + deliveryDate
+				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + "]";
 	}
 
 	public OrderForm(String id, String userId, String status, String totalPrice, String orderDate,
 			String destinationName, String destinationEmail, String destinationZipcode, String destinationAddress,
-			String destinationTel, String deliveryTime, String paymentMethod) {
+			String destinationTel, String deliveryDate, String deliveryTime, String paymentMethod) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -146,11 +156,12 @@ public class OrderForm {
 		this.destinationZipcode = destinationZipcode;
 		this.destinationAddress = destinationAddress;
 		this.destinationTel = destinationTel;
+		this.deliveryDate = deliveryDate;
 		this.deliveryTime = deliveryTime;
 		this.paymentMethod = paymentMethod;
 	}
 
-	public OrderForm() {
-	}
+	public OrderForm() {}
 
+	
 }
