@@ -73,6 +73,8 @@
 							</td>
 							<td>
 								<form th:action="@{/shopping/delete}">
+									<input type="hidden" name="itemId" th:value="${orderItem.getId()}">
+									<input type="hidden" name="orderItemId" th:value="${orderItem.getId()}">
 									<button>削除</button>
 								</form>
 							</td>

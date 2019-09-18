@@ -103,5 +103,12 @@ public class ShoppingCartService {
 		
 		return orderDomain;
 	}
+	
+	
+	public void delete(Integer itemId) {
+		
+		orderItemRepository.deleteByOrderId(itemId);
+		orderToppingRepository.deleteByOrderItemId(itemId);
+	}
 
 }

@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -36,6 +37,12 @@ public class OrderItemRepository {
 
 	}
 
+	/**
+	 * 注文した商品をインサートする.
+	 * 
+	 * @param orderItem
+	 * @return
+	 */
 	public OrderItem insert(OrderItem orderItem) {
 		
 		// ドメインの名前とSQLの？部分があっていれば自動的に入っていく
@@ -49,5 +56,20 @@ public class OrderItemRepository {
 		return orderItem;
 		
 	}
+	
+	/**
+	 * order_idを使って注文した商品を削除する.
+	 * 
+	 * @param orderId
+	 */
+	public void deleteByOrderId(Integer itemId) {
+		String sql = "DELETE FROM order_items WHERE id = :itemId";
+		
+		SqlParameterSource param = new MapSqlParameterSource().addValue("itemId", itemId);
+		
+		template.update(sql, param);
+	}
+	
+	
 	
 }

@@ -22,7 +22,24 @@ public class ShoppingCartController {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	
-	
+	/**
+	 * ショッピングカートの中身を表示する.
+	 * 
+	 * @param loginUser
+	 * @param model　リクエストスコープ
+	 * @return ショッピングカートの中身を表示する
+	 */
+	@RequestMapping("/showCart")
+	public String showCart(@AuthenticationPrincipal LoginUser loginUser, Model model) {
+		Integer userId = loginUser.getLoginUser().getId();
+		
+		Order order = shoppingCartService.findAll(userId);
+		List<OrderItem> orderItemList = order.getOrderItemList();
+		model.addAttribute("order", order);
+		model.addAttribute("orderItemList", orderItemList);
+		
+		return "order_confirm";
+	}
 	
 	/**
 	 * ショッピングカートに商品を追加する.
@@ -42,24 +59,22 @@ public class ShoppingCartController {
 		
 	}
 	
+	
 	/**
-	 * ショッピングカートの中身を表示する.
+	 * 注文した商品、トッピングを削除する.
 	 * 
-	 * @param loginUser
-	 * @param model　リクエストスコープ
-	 * @return ショッピングカートの中身を表示する
+	 * @param userId
+	 * @param orderId
+	 * @param orderitemId
+	 * @return　ショッピングカートに戻る.
 	 */
-	@RequestMapping("/showCart")
-	public String showCart(@AuthenticationPrincipal LoginUser loginUser, Model model) {
-		Integer userId = loginUser.getLoginUser().getId();
-		
-		Order order = shoppingCartService.findAll(userId);
-		List<OrderItem> orderItemList = order.getOrderItemList();
-		model.addAttribute("order", order);
-		model.addAttribute("orderItemList", orderItemList);
-		
-		return "order_confirm";
+	@RequestMapping("/delete")
+	public String delete(Integer itemId) {
+		shoppingCartService.delete(itemId);
+		return "redirect:/shopping/showCart";
 	}
+	
+	
 	
 	
 

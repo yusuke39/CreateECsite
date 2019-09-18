@@ -27,5 +27,19 @@ public class OrderToppingRepository {
 		
 		template.update(sql,param);
 	}
+	
+	
+	/**
+	 * order_item_idを使ってトッピングを削除する.
+	 * 
+	 * @param orderItemId
+	 */
+	public void deleteByOrderItemId(Integer itemId) {
+		String sql = "DELETE FROM order_toppings WHERE order_item_id = :itemId";
+		
+		SqlParameterSource param = new MapSqlParameterSource().addValue("itemId", itemId);
+		
+		template.update(sql, param);
+	}
 
 }
