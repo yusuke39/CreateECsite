@@ -94,11 +94,14 @@
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html">
+		<form th:action="@{/shopping/update}">
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
+					<input type="hidden" name="id" th:value="${order.getId()}">
+					<input type="hidden" name="status" th:value="${order.getStatus()}">
+					<input type="hidden" name="totalPrice" th:value="${order.getCalcTotalPricePrice()}">
 					<table class="table table-striped">
 						<tbody>
 							<tr>
@@ -108,7 +111,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationName">
 								</td>
 							</tr>
 							<tr>
@@ -118,7 +121,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationEmail">
 								</td>
 							</tr>
 							<tr>
@@ -128,7 +131,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">&nbsp;&nbsp;<button>住所検索</button>
+									<input type="text" name="destinationZipcode">&nbsp;&nbsp;<button>住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -138,7 +141,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationAddress">
 								</td>
 							</tr>
 							<tr>
@@ -148,7 +151,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationTel">
 								</td>
 							</tr>
 							<tr>
@@ -165,7 +168,7 @@
 													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="name" id="name"
+												<input type="date" name="deliveryTime" id="name"
 													class="form-control input-sm" />
 											</div>
 
@@ -245,7 +248,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" value="1" checked="checked">
 												代金引換
 											</label>
 										</div>
@@ -263,7 +266,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" value="2" checked="checked">
 												クレジットカード
 											</label><br><br>
 										</div>

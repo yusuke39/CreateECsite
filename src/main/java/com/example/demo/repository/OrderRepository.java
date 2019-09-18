@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -32,6 +33,23 @@ public class OrderRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
+	
+	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs,i) ->{
+		Order order = new Order();
+		order.setId(rs.getInt("id"));
+		order.setUserId(rs.getInt("user_id"));
+		order.setStatus(rs.getInt("status"));
+		order.setTotalPrice(rs.getInt("total_price"));
+		order.setOrderDate(rs.getDate("order_date"));
+		order.setDestinationName(rs.getString("destination_name"));
+		order.setDestinationEmail(rs.getString("destination_email"));
+		order.setDestinationZipcode(rs.getString("destination_zipcode"));
+		order.setDestinationAddress(rs.getString("destination_address"));
+		order.setDestinationTel(rs.getString("destination_tel"));
+		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
+		order.setPaymentMethod(rs.getInt("payment_method"));
+		return order;
+	};
 	
 	
 	//リザルトセットエクストラクター
@@ -194,11 +212,11 @@ public class OrderRepository {
 	 */
 	public List<Order> findOrderByUserIdAndStatus(Integer userId, Integer status){
 		
-		String sql = joinFiveTables();
+		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method FROM orders WHERE user_id = :userId AND status = :status";
 		
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		
-		List<Order> orderList = template.query(sql, param,ORDER_RESULT_SET_EXTRACTOR);
+		List<Order> orderList = template.query(sql, param,ORDER_ROW_MAPPER);
 		
 		return orderList;
 	}
@@ -220,5 +238,14 @@ public class OrderRepository {
 	}
 	
 	
+	public void update(Order order) {
+		String sql = "UPDATE orders SET id = :id , status = :status , total_price = :totalPrice, order_date = :orderDate ,destination_name = :destinationName ,destination_email = :destinationEmail , destination_zipcode = :destinationZipcode , "
+					+ "destination_address = :destinationAddress ,destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod WHERE id = :id";
+		
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		
+		template.update(sql, param);
+	
+	}
 
 }
