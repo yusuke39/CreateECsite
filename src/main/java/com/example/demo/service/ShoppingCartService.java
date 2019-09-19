@@ -3,8 +3,9 @@ package com.example.demo.service;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,22 +132,25 @@ public class ShoppingCartService {
 	 * @throws ParseException 
 	 */
 	public void updateOrderTable(OrderForm form) {
-		System.out.println(form);
 		Order order = new Order();
 		//現在の日付を取得して、Date型に変換する
 		LocalDate localDate = LocalDate.now();
 		Date date = Date.valueOf(localDate);
 
-		//String型からTimestamp型へ変換をする		
+			//String型からTimestamp型へ変換をする		
 			String delivery = form.getDeliveryDate() + " " + form.getDeliveryTime();
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh");
-		    java.util.Date parsedDate = null;
-			try {
-				parsedDate = dateFormat.parse(delivery);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu/MM/dd HH");
+	        LocalDateTime time = LocalDateTime.parse(delivery, formatter);
+	        Timestamp timestamp = Timestamp.valueOf(time);
+
+//		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh");
+//		    java.util.Date parsedDate = null;
+//			try {
+//				parsedDate = dateFormat.parse(delivery);
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
 		
 		//statusが0なら２に変更（入金済みの意味)
